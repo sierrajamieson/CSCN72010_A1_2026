@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LunchSplit.Helper
 {
-    internal class BillValidator
+    public class BillValidator
     {
     }
 }

@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace LunchSplit.Model
 {
-    internal class Share
+    public class Share
     {
+
+        public String Name;
+        public decimal Amount;
+        
+
+        public Share(String Name, decimal Amount)
+        {
+            this.Name = Name;
+            this.Amount = Amount;
+
+        }
+
+
+
     }
 }

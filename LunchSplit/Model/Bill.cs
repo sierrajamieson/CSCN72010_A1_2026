@@ -1,12 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LunchSplit.Model
 {
-    internal class Bill
+    public class Bill
     {
+        public decimal Subtotal;
+        public decimal Tax;
+        public TipMode tipMode;
+        public decimal TipInput;
+
+
+        public Bill(decimal Subtotal, decimal Tax, TipMode tipMode, decimal TipInput)
+        {
+            this.Subtotal = Subtotal;
+            this.Tax = Tax;
+            this.TipInput = TipInput;
+            this.tipMode = tipMode;
+
+        }
+    }
+
+    public class TipMode
+    {
+        public string mode;
+
+        public TipMode(string mode)
+        {
+            this.mode = mode;
+        }
+
+        public readonly TipMode None = new TipMode("None");
+        public readonly TipMode Percent = new TipMode("Percent");
+        public readonly TipMode Fixed = new TipMode("Fixed");
+
+
+        
+
     }
 }

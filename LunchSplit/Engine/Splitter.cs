@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace LunchSplit.Engine
 {
-    internal class Splitter
+    public class Splitter
     {
+
+        public 
+
+
     }
 }

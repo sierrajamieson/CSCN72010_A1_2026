@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LunchSplit.Engine
 {
-    internal class Rounder
+    public class Rounder
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LunchSplit.Output
 {
-    internal class ReceiptFormatter
+    public class ReceiptFormatter
     {
     }
 }
