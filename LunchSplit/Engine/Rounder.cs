@@ -9,8 +9,26 @@ namespace LunchSplit.Engine
 {
     public class Rounder
     {
+
         public List<Share> RoundShares(List<Share> rawShares, RoundingMode mode)
         {
+            List<Share> result = new List<Share>();
+
+            if (mode == RoundingMode.None)
+            {
+                foreach (Share share in rawShares)
+                {
+                    result.Add(new Share(share.Name, share.Amount));
+                }
+
+                return result;
+            }
+
+            if (rawShares.Count == 0)
+            {
+                return result;
+            }
+
             return rawShares;
         }
 
@@ -24,6 +42,7 @@ namespace LunchSplit.Engine
         {
             this.mode = mode;
         }
+        public static readonly RoundingMode None = new RoundingMode("None");
 
     }
 }

@@ -69,10 +69,10 @@ namespace LunchsplitTests
             decimal subtotal = 120.00m;
             decimal tipInput = 15.00m;
 
-            //act
+            //act&assert
             decimal tip = splitter.ComputeTip(subtotal, TipMode.Fixed, tipInput);
 
-            //assert
+            
             
         }
     }
@@ -85,13 +85,12 @@ namespace LunchsplitTests
         public void ComputeTip_NegativeSubtotal_ThrowsException()
 
         {
-            // Arrange
+            //arrange
             Splitter splitter = new Splitter();
             decimal subtotal = -10.00m;
 
-            // Act & Assert
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
-            splitter.ComputeTip(subtotal, TipMode.Percent, 15.00m));
+            //act&assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => splitter.ComputeTip(subtotal, TipMode.Percent, 15.00m));
 
         }
     }
@@ -104,19 +103,44 @@ namespace LunchsplitTests
 
         public void ComputeTip_NegativeFixedTip_ThrowsException()
         {
-            // Arrange
+            //arrange
             Splitter splitter = new Splitter();
             decimal subtotal = 100.00m;
             decimal tipInput = -5.00m;
 
-            // Act & Assert
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
-            splitter.ComputeTip(subtotal, TipMode.Fixed, tipInput));
+            //act&assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => splitter.ComputeTip(subtotal, TipMode.Fixed, tipInput));
         }
 
     }
 
+    [TestClass]
+    public class Test6
+    {
+        [TestMethod]
+        [Description("M2-6, Typical")]
+        public void RoundShares_NoRounding_PreservesRawDecimals()
+        {
+            //arrange
+            Rounder rounder = new Rounder();
+            List<Share> rawShares = new List<Share>
+            {
+            new Share("Alice", 3.3333m),
+            new Share("Bob", 3.3333m),
+            new Share("Cara", 3.3334m)
+            };
 
+            //act
+            List<Share> result = rounder.RoundShares(rawShares, RoundingMode.None);
+
+            //assert
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(3.3333m, result[0].Amount);
+            Assert.AreEqual(3.3333m, result[1].Amount);
+            Assert.AreEqual(3.3334m, result[2].Amount);
+        }
+    }
+    
 
 
 
