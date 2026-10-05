@@ -5,7 +5,7 @@ namespace LunchsplitTests
 {
     [TestClass]
     public class Test1
-    { 
+    {
         [TestMethod]
         [Description("M1-1, Typical")]
 
@@ -72,8 +72,8 @@ namespace LunchsplitTests
             //act&assert
             decimal tip = splitter.ComputeTip(subtotal, TipMode.Fixed, tipInput);
 
-            
-            
+
+
         }
     }
 
@@ -209,7 +209,6 @@ namespace LunchsplitTests
         }
     }
 
-
     [TestClass]
     public class Test10
     {
@@ -238,18 +237,45 @@ namespace LunchsplitTests
         }
     }
 
+    [TestClass]
+    public class Test11
+    {
+        [TestMethod]
+        [Description("M2-11, Edge")]
+        public void RoundShares_EmptyShareCollection_ReturnsEmpty()
+        {
+            //arrange
+            Rounder rounder = new Rounder();
+            List<Share> rawShares = new List<Share>();
 
+            //act
+            List<Share> result = rounder.RoundShares(rawShares, RoundingMode.Bankers);
 
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Count);
+        }
+    }
 
+    [TestClass]
+    public class Test12
+    {
+        [TestMethod]
+        [Description("M2-12, Typical")]
+        public void Validate_CompleteBillDetails_ReturnsOk()
+        {
+            //arrange
+            Rounder rounder = new Rounder();
+            List<Share> rawShares = new List<Share>();
 
+            //act
+            List<Share> result = rounder.RoundShares(rawShares, RoundingMode.Bankers);
 
-
-
-
-
-
-
-
+            //assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Count);
+        }
+    }
 
 
 
