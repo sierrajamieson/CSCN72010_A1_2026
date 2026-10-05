@@ -24,9 +24,10 @@ namespace LunchSplit.Model
 
         }
     }
-
+    
     public class TipMode
     {
+        
         public string mode;
 
         public TipMode(string mode)
@@ -34,12 +35,12 @@ namespace LunchSplit.Model
             this.mode = mode;
         }
 
-        public readonly TipMode None = new TipMode("None");
-        public readonly TipMode Percent = new TipMode("Percent");
-        public readonly TipMode Fixed = new TipMode("Fixed");
-
+        public static readonly TipMode None = new TipMode("None");
+        public static readonly TipMode Percent = new TipMode("Percent");
+        public static readonly TipMode Fixed = new TipMode("Fixed");
 
         
+
 
     }
 }

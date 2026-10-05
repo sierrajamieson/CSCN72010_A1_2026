@@ -9,11 +9,11 @@ namespace LunchSplit.Model
 {
     public class Attendee
     {
-        public String Name;
+        public string Name;
         public int weight;
         public bool Included;
 
-        public Attendee(String Name, int weight, bool Included)
+        public Attendee(string Name, int weight, bool Included)
         {
             this.Name = Name;
             this.weight = weight;

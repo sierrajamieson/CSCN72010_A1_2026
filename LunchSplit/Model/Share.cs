@@ -9,11 +9,11 @@ namespace LunchSplit.Model
     public class Share
     {
 
-        public String Name;
+        public string Name;
         public decimal Amount;
         
 
-        public Share(String Name, decimal Amount)
+        public Share(string Name, decimal Amount)
         {
             this.Name = Name;
             this.Amount = Amount;
