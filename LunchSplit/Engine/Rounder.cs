@@ -27,6 +27,13 @@ namespace LunchSplit.Engine
             {
                 return result;
             }
+            decimal rawTotal = 0m;
+            foreach (Share share in rawShares)
+            {
+                rawTotal += share.Amount;
+            }
+            decimal target = Math.Round(rawTotal, 2, MidpointRounding.AwayFromZero);
+
             foreach (Share share in rawShares)
             {
                 decimal rounded;
@@ -44,10 +51,27 @@ namespace LunchSplit.Engine
                     rounded = Math.Floor(share.Amount * 100m) / 100m;
                 }
 
+
                 result.Add(new Share(share.Name, rounded));
             }
 
-            
+            if (mode == RoundingMode.Bankers)
+            {
+                decimal roundedTotal = 0m;
+                foreach (Share share in result)
+                {
+                    roundedTotal += share.Amount;
+                }
+
+                int pennies = (int)Math.Round((target - roundedTotal) * 100m);
+                decimal adjustment = pennies > 0 ? 0.01m : -0.01m;
+
+                for (int i = 0; i < Math.Abs(pennies); i++)
+                {
+                    result[i % result.Count].Amount += adjustment;
+                }
+            }
+
             return result;
         }
 

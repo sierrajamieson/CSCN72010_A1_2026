@@ -187,10 +187,56 @@ namespace LunchsplitTests
         }
     }
 
+    [TestClass]
+    public class Test9
+    {
+        [TestMethod]
+        [Description("M2-9, Typical")]
+        public void RoundShares_RoundDown_AppliesFloorToCents()
+        {
+            //arragnge
+            Rounder rounder = new Rounder();
+            List<Share> rawShares = new List<Share>
+            {
+            new Share("Alice", 10.339m)
+            };
+
+            //act
+            List<Share> result = rounder.RoundShares(rawShares, RoundingMode.Floor);
+
+            //assert
+            Assert.AreEqual(10.33m, result[0].Amount);
+        }
+    }
 
 
+    [TestClass]
+    public class Test10
+    {
+        [TestMethod]
+        [Description("M2-10, Edge")]
+        public void RoundShares_UnevenSplit_ReconcilesRemainder()
+        {
+            //arrange
+            Rounder rounder = new Rounder();
+            decimal rawAmount = 10.00m / 3m;
+            List<Share> rawShares = new List<Share>
+            {
+            new Share("Alice", rawAmount),
+            new Share("Bob", rawAmount),
+            new Share("Charlie", rawAmount)
+            };
 
+            //act
+            List<Share> result = rounder.RoundShares(rawShares, RoundingMode.Bankers);
 
+            //assert
+            Assert.AreEqual(3.34m, result[0].Amount);
+            Assert.AreEqual(3.33m, result[1].Amount);
+            Assert.AreEqual(3.33m, result[2].Amount);
+            Assert.AreEqual(10.00m, result[0].Amount + result[1].Amount + result[2].Amount);
+        }
+    }
 
 
 
