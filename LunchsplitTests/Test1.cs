@@ -140,51 +140,93 @@ namespace LunchsplitTests
             Assert.AreEqual(3.3334m, result[2].Amount);
         }
     }
-    
 
+    [TestClass]
+    public class Test7
+    {
+        [TestMethod]
+        [Description("M2-7, Edge")]
+        public void RoundShares_BankersRounding_RoundsToNearestEven()
+        {
+            //arrange
+            Rounder rounder = new Rounder();
+            List<Share> rawShares = new List<Share>
+            {
+            new Share("Alice", 10.325m),
+            new Share("Bob", 10.335m)
+            };
 
+            //act
+            List<Share> result = rounder.RoundShares(rawShares, RoundingMode.Bankers);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //assert
+            Assert.AreEqual(10.32m, result[0].Amount);
+            Assert.AreEqual(10.34m, result[1].Amount);
+        }
     }
+
+    [TestClass]
+    public class Test8
+    {
+        [TestMethod]
+        [Description("M2-8, Typical")]
+        public void RoundShares_RoundUp_AppliesCeilingToCents()
+        {
+            //arrange
+            Rounder rounder = new Rounder();
+            List<Share> rawShares = new List<Share>
+            {
+            new Share("Alice", 10.331m)
+            };
+
+            //act
+            List<Share> result = rounder.RoundShares(rawShares, RoundingMode.Ceiling);
+
+            //assert
+            Assert.AreEqual(10.34m, result[0].Amount);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 
