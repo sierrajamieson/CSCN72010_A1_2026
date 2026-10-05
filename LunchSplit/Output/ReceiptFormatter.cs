@@ -8,5 +8,7 @@ namespace LunchSplit.Output
 {
     public class ReceiptFormatter
     {
+
+
     }
 }

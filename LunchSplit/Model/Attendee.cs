@@ -10,13 +10,13 @@ namespace LunchSplit.Model
     public class Attendee
     {
         public string Name;
-        public int weight;
+        public int Weight;
         public bool Included;
 
-        public Attendee(string Name, int weight, bool Included)
+        public Attendee(string Name, int Weight, bool Included)
         {
             this.Name = Name;
-            this.weight = weight;
+            this.Weight = Weight;
             this.Included = Included;
 
         }

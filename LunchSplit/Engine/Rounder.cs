@@ -14,19 +14,16 @@ namespace LunchSplit.Engine
             return rawShares;
         }
 
-
     }
 
     public class RoundingMode
     {
-
         public string mode;
 
         public RoundingMode(string mode)
         {
             this.mode = mode;
         }
-
 
     }
 }

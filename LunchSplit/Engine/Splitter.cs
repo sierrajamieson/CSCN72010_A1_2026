@@ -14,6 +14,15 @@ namespace LunchSplit.Engine
         //ComputeTip (decimal subtotal, TipMode mode, decimal tipInput)
         public decimal ComputeTip(decimal subtotal, TipMode mode, decimal tipInput)
         {
+            if (subtotal < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(subtotal));
+            }
+            if (mode == TipMode.Fixed && tipInput < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(tipInput));
+            }
+
             if (mode == TipMode.None)
             {
                 return 0.00m;
