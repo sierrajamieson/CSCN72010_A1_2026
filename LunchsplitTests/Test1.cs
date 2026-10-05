@@ -77,6 +77,7 @@ namespace LunchsplitTests
         }
     }
 
+    [TestClass]
     public class Test4
     {
         [TestMethod]
@@ -84,34 +85,36 @@ namespace LunchsplitTests
         public void ComputeTip_NegativeSubtotal_ThrowsException()
 
         {
-        // Arrange
-        Splitter splitter = new Splitter();
-        decimal subtotal = -10.00m;
+            // Arrange
+            Splitter splitter = new Splitter();
+            decimal subtotal = -10.00m;
 
-        // Act & Assert
-        Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
-        splitter.ComputeTip(subtotal, TipMode.Percent, 15.00m));
-            
-       }
+            // Act & Assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+            splitter.ComputeTip(subtotal, TipMode.Percent, 15.00m));
 
-        public class Test5
+        }
+    }
+
+    [TestClass]
+    public class Test5
+    {
+        [TestMethod]
+        [Description("M1-5, Negative")]
+
+        public void ComputeTip_NegativeFixedTip_ThrowsException()
         {
-            [TestMethod]
-            [Description("M1-5, Negative")]
+            // Arrange
+            Splitter splitter = new Splitter();
+            decimal subtotal = 100.00m;
+            decimal tipInput = -5.00m;
 
-            public void ComputeTip_NegativeFixedTip_ThrowsException()
-            {
-                // Arrange
-                Splitter splitter = new Splitter();
-                decimal subtotal = 100.00m;
-                decimal tipInput = -5.00m;
-
-                // Act & Assert
-                Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
-                    splitter.ComputeTip(subtotal, TipMode.Fixed, tipInput));
-            }
+            // Act & Assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+            splitter.ComputeTip(subtotal, TipMode.Fixed, tipInput));
         }
 
+    }
 
 
 
@@ -161,4 +164,3 @@ namespace LunchsplitTests
     }
 
 
-}
