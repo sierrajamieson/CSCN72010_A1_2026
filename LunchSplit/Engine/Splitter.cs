@@ -36,9 +36,33 @@ namespace LunchSplit.Engine
             return 0.00m;
         }
 
+
         public List<Share> CalculateShares(Bill bill, List<Attendee> attendees, RoundingMode roundingMode)
         {
-            return new List<Share>();
+            List<Attendee> included = new List<Attendee>();
+            int totalWeight = 0;
+
+            foreach (Attendee attendee in attendees)
+            {
+                if (attendee.Included)
+                {
+                    included.Add(attendee);
+                    totalWeight += attendee.Weight;
+                }
+            }
+
+            decimal tip = ComputeTip(bill.Subtotal, bill.tipMode, bill.TipInput);
+            decimal grandTotal = bill.Subtotal + bill.Tax + tip;
+
+            List<Share> rawShares = new List<Share>();
+            foreach (Attendee attendee in included)
+            {
+                decimal amount = grandTotal * attendee.Weight / totalWeight;
+                rawShares.Add(new Share(attendee.Name, amount));
+            }
+
+            Rounder rounder = new Rounder();
+            return rounder.RoundShares(rawShares, roundingMode);
         }
 
     }

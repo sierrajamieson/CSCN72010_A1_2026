@@ -408,9 +408,68 @@ namespace LunchsplitTests
         }
     }
 
+    [TestClass]
+    public class Test17
+    {
+        [TestMethod]
+        [Description("M4-17, Typical")]
+        public void CalculateShares_EqualSplit_ApportionsEvenly()
+        {
+            //id: M4-17
+            //name: CalculateShares_EqualSplit_ApportionsEvenly
 
+            //arrange
+            Splitter splitter = new Splitter();
+            Bill bill = new Bill(90.00m, 0m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+            new Attendee("Alice", 1, true),
+            new Attendee("Bob", 1, true),
+            new Attendee("Cara", 1, true)
+            };
 
+            //act
+            List<Share> result = splitter.CalculateShares(bill, attendees, RoundingMode.Bankers);
 
+            //assert
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(30.00m, result[0].Amount);
+            Assert.AreEqual(30.00m, result[1].Amount);
+            Assert.AreEqual(30.00m, result[2].Amount);
+        }
+    }
+
+    [TestClass]
+    public class Test18
+    {
+        //id: M4-18
+        //name: CalculateShares_ProportionalSplit_ApportionsWeighted
+
+        [TestMethod]
+        [Description("M4-18, Typical")]
+        public void CalculateShares_ProportionalSplit_ApportionsWeighted()
+        {
+            //id: M4-18
+            //name: CalculateShares_EqualSplit_ApportionsEvenly
+
+            //arrange
+            Splitter splitter = new Splitter();
+            Bill bill = new Bill(90.00m, 0m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+                new Attendee("Alice", 2, true),
+                new Attendee("Bob", 1, true)
+            };
+
+            //act
+            List<Share> result = splitter.CalculateShares(bill, attendees, RoundingMode.Bankers);
+
+            //assert
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(60.00m, result[0].Amount);
+            Assert.AreEqual(30.00m, result[1].Amount);
+        }
+    }
 
 
 
