@@ -471,12 +471,66 @@ namespace LunchsplitTests
         }
     }
 
+    [TestClass]
+    public class Test19
+    {
+        //id: M4-19
+        //name: CalculateShares_ExcludedAttendee_ApportionsZero
 
+        [TestMethod]
+        [Description("M4-19, Edge")]
+        public void CalculateShares_ExcludedAttendee_ApportionsZero()
+        {
+            //arrange
+            Splitter splitter = new Splitter();
+            Bill bill = new Bill(100.00m, 0m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+                new Attendee("Alice", 1, true),
+                new Attendee("Bob", 1, false),
+                new Attendee("Cara", 1, true)
+            };
 
+            //act
+            List<Share> result = splitter.CalculateShares(bill, attendees, RoundingMode.Bankers);
 
+            //assert
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(50.00m, result[0].Amount);
+            Assert.AreEqual(0.00m, result[1].Amount);
+            Assert.AreEqual(50.00m, result[2].Amount);
+        }
+    }
 
+    [TestClass]
+    public class Test20
+    {
+        [TestMethod]
+        [Description("M4-20, Typical")]
+        public void CalculateShares_TaxAndPercentTip_ApportionsTotal()
+        {
+            //id: M4-20
+            //name: CalculateShares_TaxAndPercentTip_ApportionsTotal
 
+            //arrange
+            Splitter splitter = new Splitter();
+            Bill bill = new Bill(100.00m, 13.00m, TipMode.Percent, 15.00m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+                new Attendee("Alice", 1, true),
+                new Attendee("Bob", 1, true)
+            };
 
+            //act
+            List<Share> result = splitter.CalculateShares(bill, attendees, RoundingMode.Bankers);
+
+            //assert
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(64.00m, result[0].Amount);
+            Assert.AreEqual(64.00m, result[1].Amount);
+            Assert.AreEqual(128.00m, result[0].Amount + result[1].Amount);
+        }
+    }
 
 
 

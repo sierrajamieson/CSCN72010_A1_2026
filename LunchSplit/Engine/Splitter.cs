@@ -60,9 +60,26 @@ namespace LunchSplit.Engine
                 decimal amount = grandTotal * attendee.Weight / totalWeight;
                 rawShares.Add(new Share(attendee.Name, amount));
             }
-
             Rounder rounder = new Rounder();
-            return rounder.RoundShares(rawShares, roundingMode);
+            List<Share> rounded = rounder.RoundShares(rawShares, roundingMode);
+
+            List<Share> result = new List<Share>();
+            int roundedIndex = 0;
+
+            foreach (Attendee attendee in attendees)
+            {
+                if (attendee.Included)
+                {
+                    result.Add(rounded[roundedIndex]);
+                    roundedIndex++;
+                }
+                else
+                {
+                    result.Add(new Share(attendee.Name, 0.00m));
+                }
+            }
+
+            return result;
         }
 
     }
