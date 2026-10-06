@@ -1,6 +1,7 @@
 ﻿using LunchSplit.Engine;
 using LunchSplit.Helper;
 using LunchSplit.Model;
+using LunchSplit.Output;
 
 namespace LunchsplitTests
 {
@@ -615,19 +616,70 @@ namespace LunchsplitTests
     }
 
 
+    [TestClass]
+    public class Test24
+    {
+        //id: M5-24
+        //name: Format_DefaultBillReceipt_ContainsLineItems
+
+        [TestMethod]
+        [Description("M5-24, Typical")]
+        public void Format_DefaultBillReceipt_ContainsLineItems()
+        {
+            //arrange
+            ReceiptFormatter formatter = new ReceiptFormatter();
+            Bill bill = new Bill(90.00m, 0m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+                {
+                    new Attendee("Alice", 1, true),
+                    new Attendee("Bob", 1, true),
+                    new Attendee("Cara", 1, true)
+                };
+                        List<Share> shares = new List<Share>
+                {
+                    new Share("Alice", 30.00m),
+                    new Share("Bob", 30.00m),
+                    new Share("Cara", 30.00m)
+                };
+
+            //act
+            string receipt = formatter.Format(bill, attendees, shares);
+        }
+    }
 
 
+    [TestClass]
+    public class Test25
+    {
+        //id: M5-25
+        //name: Format_ReceiptOutput_ContainsRequiredMetadata
 
+        [TestMethod]
+        [Description("M5-25, Typical")]
+        public void Format_ReceiptOutput_ContainsRequiredMetadata()
+        {
+            //arrange
+            ReceiptFormatter formatter = new ReceiptFormatter();
+            Bill bill = new Bill(90.00m, 0m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+                new Attendee("Alice", 1, true)
+            };
+                    List<Share> shares = new List<Share>
+            {
+                new Share("Alice", 90.00m)
+            };
+            string today = DateTime.Now.ToString("yyyy-MM-dd");
 
+            //act
+            string receipt = formatter.Format(bill, attendees, shares);
 
-
-
-
-
-
-
-
-
+            //assert
+            Assert.IsTrue(receipt.Contains("Student: YOUR NAME HERE"));
+            Assert.IsTrue(receipt.Contains("Date: " + today));
+            Assert.IsTrue(receipt.Contains("Created: " + today));
+        }
+    }
 
 
 
