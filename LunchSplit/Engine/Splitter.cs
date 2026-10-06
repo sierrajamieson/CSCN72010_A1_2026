@@ -33,6 +33,11 @@ namespace LunchSplit.Engine
                 return subtotal * tipInput / 100m;
             }
 
+            if (mode == TipMode.Fixed)
+            {
+                return tipInput;
+            }
+
             return 0.00m;
         }
 
@@ -49,6 +54,11 @@ namespace LunchSplit.Engine
                     included.Add(attendee);
                     totalWeight += attendee.Weight;
                 }
+            }
+
+            if (included.Count == 0 || totalWeight <= 0)
+            {
+                throw new InvalidOperationException("At least one included attendee is required.");
             }
 
             decimal tip = ComputeTip(bill.Subtotal, bill.tipMode, bill.TipInput);

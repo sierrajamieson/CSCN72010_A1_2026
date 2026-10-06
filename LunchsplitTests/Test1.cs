@@ -423,9 +423,9 @@ namespace LunchsplitTests
             Bill bill = new Bill(90.00m, 0m, TipMode.None, 0m);
             List<Attendee> attendees = new List<Attendee>
             {
-            new Attendee("Alice", 1, true),
-            new Attendee("Bob", 1, true),
-            new Attendee("Cara", 1, true)
+                new Attendee("Alice", 1, true),
+                new Attendee("Bob", 1, true),
+                new Attendee("Cara", 1, true)
             };
 
             //act
@@ -500,7 +500,7 @@ namespace LunchsplitTests
             Assert.AreEqual(0.00m, result[1].Amount);
             Assert.AreEqual(50.00m, result[2].Amount);
         }
-    }
+}
 
     [TestClass]
     public class Test20
@@ -531,6 +531,175 @@ namespace LunchsplitTests
             Assert.AreEqual(128.00m, result[0].Amount + result[1].Amount);
         }
     }
+
+    [TestClass]
+    public class Test21
+    {
+        [TestMethod]
+        [Description("M4-21, Typical")]
+        public void CalculateShares_TaxAndFixedTip_ApportionsTotal()
+        {
+
+            //id: M4-21
+            //name: CalculateShares_TaxAndFixedTip_ApportionsTotal
+
+            //arrange
+            Splitter splitter = new Splitter();
+            Bill bill = new Bill(100.00m, 13.00m, TipMode.Fixed, 20.00m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+                new Attendee("Alice", 1, true),
+                new Attendee("Bob", 1, true)
+            };
+
+            // Act
+            List<Share> result = splitter.CalculateShares(bill, attendees, RoundingMode.Bankers);
+
+            // Assert
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(66.50m, result[0].Amount);
+            Assert.AreEqual(66.50m, result[1].Amount);
+            Assert.AreEqual(133.00m, result[0].Amount + result[1].Amount);
+        }
+    }
+
+    [TestClass]
+    public class Test22
+    {
+        [TestMethod]
+        [Description("M4-22, Negative")]
+        public void CalculateShares_TaxAndFixedTip_ApportionsTotal()
+        {
+            //id: M4-22
+            //name: CalculateShares_TaxAndFixedTip_ApportionsTotal
+
+            //arrange
+            Splitter splitter = new Splitter();
+            Bill bill = new Bill(100.00m, 0m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+                new Attendee("Alice", 1, false),
+                new Attendee("Bob", 1, false)
+            };
+
+            //act&assert
+            Assert.ThrowsException<InvalidOperationException>(() =>
+            splitter.CalculateShares(bill, attendees, RoundingMode.Bankers));
+        }
+    }
+    
+
+    [TestClass]
+    public class Test23
+    {
+        //id: M4-23
+        //name: CalculateShares_TotalWeightsZero_ThrowsException
+
+        [TestMethod]
+        [Description("M4-23, Negative")]
+        public void CalculateShares_TotalWeightsZero_ThrowsException()
+        {
+            //arrange
+            Splitter splitter = new Splitter();
+            Bill bill = new Bill(100.00m, 0m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+                new Attendee("Alice", 0, true),
+                new Attendee("Bob", 0, true)
+            };
+
+            //act&assert
+            Assert.ThrowsException<InvalidOperationException>(() =>
+                splitter.CalculateShares(bill, attendees, RoundingMode.Bankers));
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
