@@ -11,24 +11,28 @@ namespace LunchSplit.Helper
     {
         public ValidationResult Validate(Bill bill, List<Attendee> attendees)
         {
-            //1.Check for null bill
+            //Check for null bill
             if (bill == null)
                 return ValidationResult.Fail("Bill cannot be null.");
 
-            //2.Block negative subtotals
+            //Block negative subtotals
             if (bill.Subtotal < 0)
                 return ValidationResult.Fail("Subtotal cannot be negative.");
 
-            //3.Block null or empty attendees list
+            //Block negative tax
+            if (bill.Tax < 0)
+                return ValidationResult.Fail("Tax cannot be negative.");
+
+            //Block null or empty attendees list
             if (attendees == null || attendees.Count == 0)
                 return ValidationResult.Fail("Attendees list cannot be null or empty.");
 
-            //4.Block negative weights
+            //Block negative weights
             if (attendees.Any(a => a.Weight < 0))
                 return ValidationResult.Fail("Attendee weights cannot be negative.");
 
-            //Everything is valid
             return ValidationResult.Success();
+
         }
 
     }

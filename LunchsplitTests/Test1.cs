@@ -1,4 +1,5 @@
 ﻿using LunchSplit.Engine;
+using LunchSplit.Helper;
 using LunchSplit.Model;
 
 namespace LunchsplitTests
@@ -62,7 +63,7 @@ namespace LunchsplitTests
         public void ComputeTip_FixedTipMode_ReturnsFixedAmount()
         {
             //id: M1-3
-            //name:  ComputeTip_FixedTipMode_ReturnsFixedAmount
+            //name: ComputeTip_FixedTipMode_ReturnsFixedAmount
 
             //arrange
             Splitter splitter = new Splitter();
@@ -85,6 +86,9 @@ namespace LunchsplitTests
         public void ComputeTip_NegativeSubtotal_ThrowsException()
 
         {
+            //id: M1-4
+            //name: ComputeTip_NegativeSubtotal_ThrowsException
+
             //arrange
             Splitter splitter = new Splitter();
             decimal subtotal = -10.00m;
@@ -103,6 +107,9 @@ namespace LunchsplitTests
 
         public void ComputeTip_NegativeFixedTip_ThrowsException()
         {
+            //id: M1-5
+            //name: ComputeTip_NegativeFixedTip_ThrowsException
+
             //arrange
             Splitter splitter = new Splitter();
             decimal subtotal = 100.00m;
@@ -121,6 +128,9 @@ namespace LunchsplitTests
         [Description("M2-6, Typical")]
         public void RoundShares_NoRounding_PreservesRawDecimals()
         {
+            //id: M2-6
+            //name: RoundShares_NoRounding_PreservesRawDecimals
+
             //arrange
             Rounder rounder = new Rounder();
             List<Share> rawShares = new List<Share>
@@ -148,6 +158,9 @@ namespace LunchsplitTests
         [Description("M2-7, Edge")]
         public void RoundShares_BankersRounding_RoundsToNearestEven()
         {
+            //id: M2-7
+            //name: RoundShares_BankersRounding_RoundsToNearestEven
+
             //arrange
             Rounder rounder = new Rounder();
             List<Share> rawShares = new List<Share>
@@ -172,6 +185,9 @@ namespace LunchsplitTests
         [Description("M2-8, Typical")]
         public void RoundShares_RoundUp_AppliesCeilingToCents()
         {
+            //id: M2-8
+            //name: RoundShares_RoundUp_AppliesCeilingToCents
+
             //arrange
             Rounder rounder = new Rounder();
             List<Share> rawShares = new List<Share>
@@ -194,6 +210,9 @@ namespace LunchsplitTests
         [Description("M2-9, Typical")]
         public void RoundShares_RoundDown_AppliesFloorToCents()
         {
+            //id: M2-9
+            //name: RoundShares_RoundDown_AppliesFloorToCents
+
             //arragnge
             Rounder rounder = new Rounder();
             List<Share> rawShares = new List<Share>
@@ -216,6 +235,9 @@ namespace LunchsplitTests
         [Description("M2-10, Edge")]
         public void RoundShares_UnevenSplit_ReconcilesRemainder()
         {
+            //id: M2-10
+            //name: RoundShares_UnevenSplit_ReconcilesRemainder
+
             //arrange
             Rounder rounder = new Rounder();
             decimal rawAmount = 10.00m / 3m;
@@ -244,6 +266,9 @@ namespace LunchsplitTests
         [Description("M2-11, Edge")]
         public void RoundShares_EmptyShareCollection_ReturnsEmpty()
         {
+            //id: M2-11
+            //name: RoundShares_EmptyShareCollection_ReturnsEmpty
+
             //arrange
             Rounder rounder = new Rounder();
             List<Share> rawShares = new List<Share>();
@@ -264,6 +289,9 @@ namespace LunchsplitTests
         [Description("M2-12, Typical")]
         public void Validate_CompleteBillDetails_ReturnsOk()
         {
+            //id: M2-12
+            //name: Validate_CompleteBillDetails_ReturnsOk
+
             //arrange
             Rounder rounder = new Rounder();
             List<Share> rawShares = new List<Share>();
@@ -276,6 +304,123 @@ namespace LunchsplitTests
             Assert.AreEqual(0, result.Count);
         }
     }
+
+    [TestClass]
+    public class Test13
+    {
+        [TestMethod]
+        [Description("M3-13, Negative")]
+        public void Validate_EmptyAttendeeCollection_ReturnsFail()
+        {
+            //id: M3-13
+            //name: Validate_EmptyAttendeeCollection_ReturnsFail
+
+            //arrange
+            BillValidator validator = new BillValidator();
+            Bill bill = new Bill(100.00m, 13.00m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>();
+
+            //act
+            ValidationResult result = validator.Validate(bill, attendees);
+
+            //assert
+            Assert.IsFalse(result.IsValid);
+            Assert.IsFalse(string.IsNullOrEmpty(result.ErrorMessage));
+        }
+    }
+
+    [TestClass]
+    public class Test14
+    {
+        [TestMethod]
+        [Description("M3-14, Negative")]
+        public void Validate_NegativeSubtotal_ReturnsFail()
+        {
+            //id: M3-14
+            //name: Validate_NegativeSubtotal_ReturnsFai
+
+            //range
+            BillValidator validator = new BillValidator();
+            Bill bill = new Bill(-50.00m, 6.50m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+            new Attendee("Alice", 1, true)
+            };
+
+            //act
+            ValidationResult result = validator.Validate(bill, attendees);
+
+            //assert
+            Assert.IsFalse(result.IsValid);
+            Assert.IsFalse(string.IsNullOrEmpty(result.ErrorMessage));
+        }
+    }
+
+    [TestClass]
+    public class Test15
+    {
+        [TestMethod]
+        [Description("M3-15, Negative")]
+        public void Validate_NegativeTax_ReturnsFail()
+        {
+            //id: M3-15
+            //name: Validate_NegativeTax_ReturnsFail
+
+            //arrange
+            BillValidator validator = new BillValidator();
+            Bill bill = new Bill(100.00m, -5.00m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>
+            {
+            new Attendee("Alice", 1, true)
+            };
+
+            //act
+            ValidationResult result = validator.Validate(bill, attendees);
+
+            //assert
+            Assert.IsFalse(result.IsValid);
+            Assert.IsFalse(string.IsNullOrEmpty(result.ErrorMessage));
+        }
+    }
+
+    [TestClass]
+    public class Test16
+    {
+        [TestMethod]
+        [Description("M3-16, Negative")]
+        public void Validate_ZeroAttendees_ReturnsFail()
+        {
+
+            //id: M3-16
+            //name: Validate_ZeroAttendees_ReturnsFail
+
+            //arrange
+            BillValidator validator = new BillValidator();
+            Bill bill = new Bill(100.00m, 13.00m, TipMode.None, 0m);
+            List<Attendee> attendees = new List<Attendee>();
+
+            //act
+            ValidationResult result = validator.Validate(bill, attendees);
+
+            //assert
+            Assert.IsFalse(result.IsValid);
+            Assert.IsFalse(string.IsNullOrEmpty(result.ErrorMessage));
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
