@@ -683,12 +683,36 @@ namespace LunchsplitTests
 
 
 
+    [TestClass]
+    public class Test26
+    {
+        //id: TDD-26
+        //name: Placeholder TDD failing test targeting future CSV format (F5)
+
+        [TestMethod]
+        [Description("TDD-26, RED/PENDING")]
+        public void Format_ReceiptOutput_ContainsRequiredMetadata()
+        {
+          
+        }
+    }
 
 
 
 
+    [TestClass]
+    public class Test27
+    {
+        //id: TDD-27
+        //name: Placeholder TDD failing test targeting future Stripe gateway (F6)
 
-
+        [TestMethod]
+        [Description("TDD-25, RED/PENDING")]
+        public void Format_ReceiptOutput_ContainsRequiredMetadata()
+        {
+            
+        }
+    }
 
 
 
