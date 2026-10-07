@@ -340,7 +340,7 @@ namespace LunchsplitTests
             //id: M3-14
             //name: Validate_NegativeSubtotal_ReturnsFai
 
-            //range
+            //arrange
             BillValidator validator = new BillValidator();
             Bill bill = new Bill(-50.00m, 6.50m, TipMode.None, 0m);
             List<Attendee> attendees = new List<Attendee>
@@ -553,10 +553,10 @@ namespace LunchsplitTests
                 new Attendee("Bob", 1, true)
             };
 
-            // Act
+            //act
             List<Share> result = splitter.CalculateShares(bill, attendees, RoundingMode.Bankers);
 
-            // Assert
+            //assert
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(66.50m, result[0].Amount);
             Assert.AreEqual(66.50m, result[1].Amount);
