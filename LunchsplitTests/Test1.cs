@@ -691,7 +691,7 @@ namespace LunchsplitTests
 
         [TestMethod]
         [Description("TDD-26, RED/PENDING")]
-        public void Format_ReceiptOutput_ContainsRequiredMetadata()
+        public void Format_CsvReceiptExporter_MatchesSchema()
         {
           
         }
@@ -708,7 +708,7 @@ namespace LunchsplitTests
 
         [TestMethod]
         [Description("TDD-25, RED/PENDING")]
-        public void Format_ReceiptOutput_ContainsRequiredMetadata()
+        public void CalculateShares_PaymentRequest_ValidatesStripeMock()
         {
             
         }
